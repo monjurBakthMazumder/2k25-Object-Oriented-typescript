@@ -385,6 +385,141 @@ admin1.manageSystem(); // New method
 
 ---
 
+## Type Guards in TypeScript – `typeof` & `in` Operators
+
+Type guards are a powerful feature in TypeScript that help you **safely handle union types** by checking the **actual type** of a variable at runtime.
+
+This allows you to write safer, more predictable logic and avoid runtime errors.
+
+---
+
+### Using `typeof` for Primitive Types
+
+The `typeof` operator is used to check the type of **primitive values** like `string`, `number`, `boolean`, etc.
+
+#### Example: Add two values (numbers or strings)
+
+```ts
+type TAlphaNumeric = string | number;
+
+const add = (param1: TAlphaNumeric, param2: TAlphaNumeric): TAlphaNumeric => {
+  // Check if both are numbers
+  if (typeof param1 === "number" && typeof param2 === "number") {
+    return param1 + param2; // Arithmetic addition
+  } else {
+    return param1.toString() + param2.toString(); // String concatenation
+  }
+};
+```
+
+#### Testing the Function
+
+```ts
+console.log(add(10, 20)); // ➜ 30
+console.log(add("10", "20")); // ➜ "1020"
+console.log(add(10, "20")); // ➜ "1020"
+console.log(add("Code", 123)); // ➜ "Code123"
+```
+
+#### What’s Happening?
+
+| Input          | Type Check                | Output      |
+| -------------- | ------------------------- | ----------- |
+| `10 + 20`      | number + number           | `30`        |
+| `"10" + "20"`  | string + string           | `"1020"`    |
+| `10 + "20"`    | number + string ➜ convert | `"1020"`    |
+| `"Code" + 123` | string + number ➜ convert | `"Code123"` |
+
+---
+
+### Using `in` for Object Type Guards
+
+The `in` operator is used to check if a **property exists** in an object, making it very useful for narrowing **union types of object shapes**.
+
+#### Example: Distinguishing Between Normal and Admin Users
+
+```ts
+type TNormalUser = {
+  name: string;
+};
+
+type TAdminUser = {
+  name: string;
+  role: "admin";
+};
+
+const getUser = (user: TNormalUser | TAdminUser) => {
+  if ("role" in user) {
+    console.log(`My name is ${user.name} and my role is ${user.role}`);
+  } else {
+    console.log(`My name is ${user.name}`);
+  }
+};
+```
+
+#### Testing the Function
+
+```ts
+const normalUser: TNormalUser = { name: "Rakib" };
+getUser(normalUser);
+// ➜ Output: My name is Rakib
+
+const adminUser: TAdminUser = { name: "Sakib", role: "admin" };
+getUser(adminUser);
+// ➜ Output: My name is Sakib and my role is admin
+```
+
+---
+
+### Summary Table
+
+| Operator | Use Case                                | Checks For               |
+| -------- | --------------------------------------- | ------------------------ |
+| `typeof` | Primitive types like `number`, `string` | `typeof value === "..."` |
+| `in`     | Object shapes / keys                    | `"key" in object`        |
+
+---
+
+### Practice Task
+
+Try writing a function `printValueType()` that accepts `string | number | boolean` and prints its type and value using `typeof`.
+
+<details>
+<summary> Example Solution</summary>
+
+```ts
+const printValueType = (value: string | number | boolean) => {
+  if (typeof value === "string") {
+    console.log(`This is a string: "${value}"`);
+  } else if (typeof value === "number") {
+    console.log(`This is a number: ${value}`);
+  } else if (typeof value === "boolean") {
+    console.log(`This is a boolean: ${value}`);
+  }
+};
+
+printValueType("Hello");
+printValueType(42);
+printValueType(true);
+```
+
+</details>
+
+---
+
+### Why Use Type Guards?
+
+- Helps safely handle complex types.
+- Avoids unnecessary type casting.
+- Prevents runtime errors.
+- Improves code clarity and readability.
+
+---
+
+This section helps build your foundational understanding of **runtime type checking** in TypeScript.
+
+---
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
