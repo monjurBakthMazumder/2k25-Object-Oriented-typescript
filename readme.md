@@ -924,6 +924,126 @@ If you try to deposit a negative or zero amount, the setter will prevent it and 
 
 ---
 
+## Static Members in Object-Oriented Programming (OOP)
+
+In TypeScript, **static properties** and **static methods** are associated with the **class itself** rather than with individual instances of the class. Static members can be used to store data or behavior that should be shared across all instances of the class. This is useful when you need to track shared state, or when certain functionality does not require instance-specific data.
+
+### Key Concepts:
+
+- **Static Properties**: Shared across all instances of the class. They are accessed using the class name, not via an instance.
+- **Static Methods**: Methods that belong to the class itself, and not to any individual instance. They are invoked directly on the class.
+
+### 1. Example 1: Non-static Class (`Counter1`)
+
+In this example, we will create a counter class where each instance maintains its own state.
+
+```ts
+class Counter1 {
+  count: number = 0; // Instance property to store the count for each object
+
+  increment() {
+    this.count = this.count + 1; // Increment instance's count
+    return this.count;
+  }
+
+  decrement() {
+    this.count = this.count - 1; // Decrement instance's count
+    return this.count;
+  }
+}
+
+const instance11 = new Counter1();
+console.log(`Instance11 Incremented: ${instance11.increment()}`); // 1
+
+const instance12 = new Counter1();
+console.log(`Instance12 Incremented: ${instance12.increment()}`); // 1
+```
+
+**Explanation:**
+
+- `Counter1` has an **instance property** called `count`. Each instance of `Counter1` maintains its own version of `count`.
+- Every time you create a new instance, its `count` starts at `0`, and you can increment or decrement it without affecting other instances.
+
+### 2. Example 2: Static Class (`Counter2`)
+
+In this example, we will modify the `Counter` class to make the `count` property static, which means the count will be shared across all instances of the class.
+
+```ts
+class Counter2 {
+  static count: number = 0; // Static property to store a shared count across all instances
+
+  increment() {
+    Counter2.count = Counter2.count + 1; // Increment the static count
+    return Counter2.count;
+  }
+
+  decrement() {
+    Counter2.count = Counter2.count - 1; // Decrement the static count
+    return Counter2.count;
+  }
+}
+
+const instance21 = new Counter2();
+console.log(`Instance21 Incremented: ${instance21.increment()}`); // 1 (static count shared)
+
+const instance22 = new Counter2();
+console.log(`Instance22 Incremented: ${instance22.increment()}`); // 2 (static count is shared across instances)
+```
+
+**Explanation:**
+
+- `Counter2` has a **static property** `count` which is shared among all instances of the class.
+- When you increment the `count` using one instance, it affects the value for all other instances since the static property is shared globally.
+- **Key Point**: The `count` property is modified using `Counter2.count`, not `this.count`, because it’s a static property.
+
+### 3. Example 3: Static Methods (`Counter3`)
+
+Static methods are used when the functionality does not rely on instance-specific data. Static methods can be invoked directly on the class, without needing an instance.
+
+```ts
+class Counter3 {
+  static count: number = 0; // Static property to store the count
+
+  static increment() {
+    Counter3.count = Counter3.count + 1; // Increment the static count
+    return Counter3.count;
+  }
+
+  static decrement() {
+    Counter3.count = Counter3.count - 1; // Decrement the static count
+    return Counter3.count;
+  }
+}
+
+// Calling static methods directly on the class
+console.log(`Static Increment 1: ${Counter3.increment()}`); // 1
+console.log(`Static Increment 2: ${Counter3.increment()}`); // 2
+```
+
+**Explanation:**
+
+- `Counter3` has **static methods** `increment` and `decrement`. These methods operate on the static `count` property.
+- **Static methods** are called using the class name (`Counter3.increment()`), not via an instance.
+- Static methods are useful when the behavior is the same for all instances and doesn’t rely on instance-specific data.
+
+### 4. Recap:
+
+- **Instance properties/methods**: Belong to each individual instance of the class. Each instance can have its own values for properties and can call instance methods.
+- **Static properties/methods**: Belong to the class itself. They are shared across all instances, and are accessed via the class name rather than an instance.
+
+#### Why Use Static Members?
+
+- Static properties are useful for **shared data** or **state** that is not tied to a particular instance.
+- Static methods can implement **utility functions** or **helper functions** that don’t require an instance to be useful (e.g., logging, configuration, or calculation methods).
+
+---
+
+### Conclusion
+
+Static members are a powerful feature in object-oriented programming in TypeScript. They allow you to share data or behavior across all instances of a class without needing to instantiate the class multiple times. Whether you're dealing with a shared counter, utility methods, or configurations, static members provide a clean and efficient way to handle common functionality.
+
+---
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
