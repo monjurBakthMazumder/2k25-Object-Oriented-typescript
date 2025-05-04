@@ -111,6 +111,191 @@ With this knowledge, you can confidently build complex applications that are bot
 
 ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Class and Object in TypeScript
+
+In Object-Oriented Programming (OOP), **classes** are blueprints for creating **objects**. Each object created from a class can have its own data (**properties**) and functionality (**methods**).
+
+Let’s break this down with examples and explanations.
+
+---
+
+### Basic Example of a Class
+
+```ts
+class Animal {
+  name: string;
+  species: string;
+  sound: string;
+
+  constructor(name: string, species: string, sound: string) {
+    this.name = name;
+    this.species = species;
+    this.sound = sound;
+  }
+
+  makeSound() {
+    console.log(`The ${this.species} named "${this.name}" says: "${this.sound}"`);
+  }
+}
+
+const dog = new Animal("Dog Miya", "dog", "Ghew Ghew");
+const cat = new Animal("Cat Miya", "cat", "Meaw Meaw");
+
+dog.makeSound(); // Output: The dog named "Dog Miya" says: "Ghew Ghew"
+cat.makeSound(); // Output: The cat named "Cat Miya" says: "Meaw Meaw"
+```
+
+### Explanation:
+
+* `class Animal` defines a class with 3 properties (`name`, `species`, `sound`) and 1 method (`makeSound()`).
+* The `constructor` initializes the object when created using the `new` keyword.
+* The `makeSound()` method logs a sentence using the object's data.
+
+---
+
+### Using Constructor Shorthand
+
+TypeScript allows a shorthand for defining and assigning properties directly from the constructor:
+
+```ts
+class Animal {
+  constructor(
+    public name: string,
+    public species: string,
+    public sound: string
+  ) {}
+
+  makeSound() {
+    console.log(`The ${this.species} named "${this.name}" says: "${this.sound}"`);
+  }
+}
+
+const dog = new Animal("Dog Miya", "dog", "Ghew Ghew");
+const cat = new Animal("Cat Miya", "cat", "Meaw Meaw");
+
+dog.makeSound(); // Output: The dog named "Dog Miya" says: "Ghew Ghew"
+cat.makeSound(); // Output: The cat named "Cat Miya" says: "Meaw Meaw"
+```
+
+### Benefits of Constructor Shorthand:
+
+* Less code.
+* Automatically creates and assigns properties with `public`, `private`, or `protected` access modifiers.
+
+---
+
+### Logging and Debugging
+
+You can always inspect your objects and debug like this:
+
+```ts
+console.log(dog); // Output: Animal { name: 'Dog Miya', species: 'dog', sound: 'Ghew Ghew' }
+dog.makeSound();  // Output: The dog named "Dog Miya" says: "Ghew Ghew"
+```
+
+This is very helpful when working on complex object hierarchies or when you want to ensure data is passed correctly.
+
+---
+
+### Why Use Classes?
+
+* Reuse code by creating multiple instances (objects).
+* Group related data and behaviors.
+* Helps with large-scale, maintainable application design.
+
+---
+
+### Class vs Object Summary
+
+| Feature    | Class                         | Object                                   |
+| ---------- | ----------------------------- | ---------------------------------------- |
+| Definition | A blueprint or template       | An instance of a class                   |
+| Use        | Define structure and behavior | Access or manipulate specific data       |
+| Keyword    | `class`                       | `new ClassName(...)` to create an object |
+
+---
+
+### Practice Challenge
+
+Try defining your own class called `Car` with the following:
+
+* Properties: `brand`, `model`, `year`
+* Method: `displayInfo()` that logs `"Brand Model (Year)"`
+
+<details>
+<summary>Example solution</summary>
+
+```ts
+class Car {
+  constructor(
+    public brand: string,
+    public model: string,
+    public year: number
+  ) {}
+
+  displayInfo() {
+    console.log(`${this.brand} ${this.model} (${this.year})`);
+  }
+}
+
+const car1 = new Car("Toyota", "Corolla", 2020);
+car1.displayInfo(); // Output: Toyota Corolla (2020)
+```
+
+</details>
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
