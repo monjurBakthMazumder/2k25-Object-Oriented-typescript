@@ -798,6 +798,132 @@ These modifiers help enforce **clean architecture** and ensure **data integrity*
 
 ---
 
+## Getters and Setters in TypeScript
+
+In TypeScript, **getters** and **setters** are special methods used to access and modify the properties of a class. They provide a clean way to **encapsulate** logic and control how the properties are retrieved and updated.
+
+---
+
+### What are Getters and Setters?
+
+- **Getter**: A getter allows you to retrieve the value of a property. It's defined using the `get` keyword and provides a **read-only** way to access private or protected class properties.
+
+- **Setter**: A setter allows you to modify the value of a property. It's defined using the `set` keyword and provides a **controlled** way to update private or protected class properties.
+
+---
+
+### Example: Bank Account with Getters and Setters
+
+In this example, we'll define a **BangAccount** class, which uses a setter to deposit money into the account and a getter to retrieve the balance.
+
+```ts
+class BangAccount {
+  public readonly id: number; // Public readonly property
+  public name: string; // Public property
+  private _balance: number; // Private property, only accessible inside the class
+
+  constructor(id: number, name: string, _balance: number) {
+    this.id = id;
+    this.name = name;
+    this._balance = _balance;
+
+    console.log(
+      ` Account created for ${name} with ID: ${id} and balance: ${_balance}`
+    );
+  }
+
+  // Getter to access the balance
+  get balance() {
+    console.log(` Current balance for ${this.name} is: ${this._balance}`);
+    return this._balance; // Return the balance
+  }
+
+  // Setter to deposit money into the account
+  set diposite(amount: number) {
+    if (amount > 0) {
+      this._balance += amount; // Update balance with deposit
+      console.log(
+        ` ${amount} deposited successfully. New balance: ${this._balance}`
+      );
+    } else {
+      console.log(` Cannot deposit a negative or zero amount.`);
+    }
+  }
+}
+```
+
+### Key Points:
+
+- **Public Readonly Property (`id`)**: This ensures that the ID can only be set once, when the object is created, and cannot be modified after that.
+- **Private Property (`_balance`)**: This keeps the balance value **encapsulated**, preventing direct access from outside the class.
+- **Getter (`balance`)**: The getter allows access to the private balance property. This provides a clean and controlled way of reading the balance.
+- **Setter (`diposite`)**: The setter allows you to deposit money into the account. It ensures that only positive amounts are added, providing validation.
+
+---
+
+### Usage
+
+You can create an instance of `BangAccount`, deposit money using the setter, and check the balance using the getter.
+
+#### Step 1: Create an Account
+
+```ts
+const person = new BangAccount(11, "Mazumder", 200);
+```
+
+This will create an account with an initial balance of **200**.
+
+#### Step 2: Check the Balance (Using Getter)
+
+```ts
+person.balance; //  Current balance for Mazumder is: 200
+```
+
+This accesses the balance through the getter method.
+
+#### Step 3: Deposit Money (Using Setter)
+
+```ts
+person.diposite = 500; //  500 deposited successfully. New balance: 700
+```
+
+This will deposit **500** into the account, updating the balance.
+
+#### Step 4: Check Updated Balance (Using Getter)
+
+```ts
+person.balance; //  Current balance for Mazumder is: 700
+```
+
+The balance is updated to **700** after the deposit.
+
+#### Step 5: Attempt Invalid Deposit (Using Setter)
+
+```ts
+person.diposite = -100; //  Cannot deposit a negative or zero amount.
+```
+
+If you try to deposit a negative or zero amount, the setter will prevent it and display an error message.
+
+---
+
+### Benefits of Using Getters and Setters:
+
+1. **Encapsulation**: You can control how the internal properties of the class are accessed and modified, keeping them hidden from direct manipulation.
+2. **Validation**: With setters, you can ensure that only valid data is being set (e.g., validating deposit amounts).
+3. **Read-only Access**: Using getters, you can give users read-only access to internal data, like a balance, without allowing them to modify it.
+4. **Custom Logic**: You can add logic to getters and setters, such as triggering events when a value changes, or performing calculations when retrieving a value.
+
+---
+
+### Summary
+
+- **Getters** provide a way to access private/protected properties with custom logic and without allowing direct manipulation of those properties.
+- **Setters** enable controlled modification of private/protected properties, allowing you to enforce rules (like validation) before updating a value.
+- They are an essential feature of **encapsulation** in object-oriented programming, helping you maintain **data integrity** and provide cleaner, more maintainable code.
+
+---
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
