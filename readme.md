@@ -111,32 +111,6 @@ With this knowledge, you can confidently build complex applications that are bot
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Class and Object in TypeScript
 
 In Object-Oriented Programming (OOP), **classes** are blueprints for creating **objects**. Each object created from a class can have its own data (**properties**) and functionality (**methods**).
@@ -160,7 +134,9 @@ class Animal {
   }
 
   makeSound() {
-    console.log(`The ${this.species} named "${this.name}" says: "${this.sound}"`);
+    console.log(
+      `The ${this.species} named "${this.name}" says: "${this.sound}"`
+    );
   }
 }
 
@@ -173,9 +149,9 @@ cat.makeSound(); // Output: The cat named "Cat Miya" says: "Meaw Meaw"
 
 ### Explanation:
 
-* `class Animal` defines a class with 3 properties (`name`, `species`, `sound`) and 1 method (`makeSound()`).
-* The `constructor` initializes the object when created using the `new` keyword.
-* The `makeSound()` method logs a sentence using the object's data.
+- `class Animal` defines a class with 3 properties (`name`, `species`, `sound`) and 1 method (`makeSound()`).
+- The `constructor` initializes the object when created using the `new` keyword.
+- The `makeSound()` method logs a sentence using the object's data.
 
 ---
 
@@ -192,7 +168,9 @@ class Animal {
   ) {}
 
   makeSound() {
-    console.log(`The ${this.species} named "${this.name}" says: "${this.sound}"`);
+    console.log(
+      `The ${this.species} named "${this.name}" says: "${this.sound}"`
+    );
   }
 }
 
@@ -205,8 +183,8 @@ cat.makeSound(); // Output: The cat named "Cat Miya" says: "Meaw Meaw"
 
 ### Benefits of Constructor Shorthand:
 
-* Less code.
-* Automatically creates and assigns properties with `public`, `private`, or `protected` access modifiers.
+- Less code.
+- Automatically creates and assigns properties with `public`, `private`, or `protected` access modifiers.
 
 ---
 
@@ -216,7 +194,7 @@ You can always inspect your objects and debug like this:
 
 ```ts
 console.log(dog); // Output: Animal { name: 'Dog Miya', species: 'dog', sound: 'Ghew Ghew' }
-dog.makeSound();  // Output: The dog named "Dog Miya" says: "Ghew Ghew"
+dog.makeSound(); // Output: The dog named "Dog Miya" says: "Ghew Ghew"
 ```
 
 This is very helpful when working on complex object hierarchies or when you want to ensure data is passed correctly.
@@ -225,9 +203,9 @@ This is very helpful when working on complex object hierarchies or when you want
 
 ### Why Use Classes?
 
-* Reuse code by creating multiple instances (objects).
-* Group related data and behaviors.
-* Helps with large-scale, maintainable application design.
+- Reuse code by creating multiple instances (objects).
+- Group related data and behaviors.
+- Helps with large-scale, maintainable application design.
 
 ---
 
@@ -245,8 +223,8 @@ This is very helpful when working on complex object hierarchies or when you want
 
 Try defining your own class called `Car` with the following:
 
-* Properties: `brand`, `model`, `year`
-* Method: `displayInfo()` that logs `"Brand Model (Year)"`
+- Properties: `brand`, `model`, `year`
+- Method: `displayInfo()` that logs `"Brand Model (Year)"`
 
 <details>
 <summary>Example solution</summary>
@@ -272,29 +250,140 @@ car1.displayInfo(); // Output: Toyota Corolla (2020)
 
 ---
 
+## Inheritance in TypeScript
 
+**Inheritance** is a core principle of Object-Oriented Programming (OOP) that allows one class to inherit the properties and methods of another. This promotes **code reuse**, **organization**, and **scalability**.
 
+---
 
+### Base Class (Parent)
 
+A **base class** defines common properties and methods that can be reused by **derived classes** (child classes).
 
+```ts
+class Person {
+  name: string;
+  age: string;
+  address: string;
 
+  constructor(name: string, age: string, address: string) {
+    this.name = name;
+    this.age = age;
+    this.address = address;
+  }
 
+  getSleep(numberOfHours: number) {
+    console.log(`${this.name} will sleep for ${numberOfHours} hours.`);
+  }
+}
+```
 
+---
 
+### Derived Class (Child)
 
+You can create new classes that **extend** the base class using the `extends` keyword.
 
+```ts
+class Student extends Person {
+  constructor(name: string, age: string, address: string) {
+    super(name, age, address); // Call base class constructor
+  }
+}
+```
 
+### Another Derived Class with Extra Features
 
+You can add additional properties and methods to a subclass.
 
+```ts
+class Teacher extends Person {
+  designation: string;
 
+  constructor(name: string, age: string, address: string, designation: string) {
+    super(name, age, address); // Inherit base properties
+    this.designation = designation;
+  }
 
+  takeClass(numOfClass: number) {
+    console.log(`${this.name} will take ${numOfClass} class(es).`);
+  }
+}
+```
 
+---
 
+### Full Example with Console Output
 
+```ts
+// Create a Student
+const student1 = new Student("Rafi", "20", "Dhaka");
+console.log("Student Info:", student1);
+// Output: Student Info: Student { name: 'Rafi', age: '20', address: 'Dhaka' }
 
+student1.getSleep(8);
+// Output: Rafi will sleep for 8 hours.
 
+// Create a Teacher
+const teacher1 = new Teacher("Munna Sir", "40", "Chattogram", "Math Teacher");
+console.log("Teacher Info:", teacher1);
+// Output: Teacher Info: Teacher { name: 'Munna Sir', age: '40', address: 'Chattogram', designation: 'Math Teacher' }
 
+teacher1.getSleep(6);
+// Output: Munna Sir will sleep for 6 hours.
 
+teacher1.takeClass(3);
+// Output: Munna Sir will take 3 class(es).
+```
+
+---
+
+### Explanation
+
+| Concept        | Description                                                                  |
+| -------------- | ---------------------------------------------------------------------------- |
+| `extends`      | Used to inherit from another class.                                          |
+| `super()`      | Calls the constructor of the parent class.                                   |
+| Shared Methods | Inherited methods (like `getSleep()`) are available to all subclasses.       |
+| Custom Methods | You can add new behavior to each subclass (like `takeClass()` in `Teacher`). |
+
+---
+
+### Why Use Inheritance?
+
+- Avoid duplicate code.
+- Express logical relationships (e.g., a Teacher **is a** Person).
+- Make future extensions easier (e.g., add more subclasses like `Admin`, `Guardian`, etc.).
+- Encourage consistency across components.
+
+---
+
+### Practice Task
+
+Try creating a new class `Admin` that inherits from `Person` and adds the method `manageSystem()`.
+
+<details>
+<summary>Example Solution</summary>
+
+```ts
+class Admin extends Person {
+  constructor(name: string, age: string, address: string) {
+    super(name, age, address);
+  }
+
+  manageSystem() {
+    console.log(`${this.name} is managing the system.`);
+  }
+}
+
+const admin1 = new Admin("Kamal", "35", "Sylhet");
+admin1.getSleep(7); // Inherited method
+admin1.manageSystem(); // New method
+```
+
+</details>
+
+---
 
 ## Author
 
