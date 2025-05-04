@@ -520,46 +520,13 @@ This section helps build your foundational understanding of **runtime type check
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##  Type Guards in TypeScript – `instanceof`
+## Type Guards in TypeScript – `instanceof`
 
 When working with **class-based object types**, TypeScript allows us to use the `instanceof` operator to narrow down types at runtime. This is especially useful in **object-oriented programming**, where instances might come from a class hierarchy.
 
 ---
 
-###  What is `instanceof`?
+### What is `instanceof`?
 
 The `instanceof` operator checks whether an object is an **instance of a specific class** (or one of its subclasses).
 It is used to apply logic based on the **actual class** of the object at runtime.
@@ -600,7 +567,7 @@ class Cat extends Animal {
 
 ---
 
-###  Creating Objects
+### Creating Objects
 
 ```ts
 const dog = new Dog("Dog Vai", "Dog");
@@ -610,7 +577,7 @@ const rabbit = new Animal("Rabbit Vai", "Rabbit");
 
 ---
 
-###  Using `instanceof` Directly
+### Using `instanceof` Directly
 
 ```ts
 const getAnimal1 = (animal: Animal) => {
@@ -626,14 +593,14 @@ const getAnimal1 = (animal: Animal) => {
   }
 };
 
-getAnimal1(dog);    // Dog Vai is barking: "Woof! Woof!"
-getAnimal1(cat);    // Cat Vai is meowing: "Meow~"
+getAnimal1(dog); // Dog Vai is barking: "Woof! Woof!"
+getAnimal1(cat); // Cat Vai is meowing: "Meow~"
 getAnimal1(rabbit); // Rabbit Vai is making a generic animal sound
 ```
 
 ---
 
-###  Cleaner: Type Guard Functions (Predicates)
+### Cleaner: Type Guard Functions (Predicates)
 
 To improve readability and reusability, you can define **custom type guard functions**.
 
@@ -680,15 +647,15 @@ getAnimal2(rabbit);
 
 ---
 
-###  Summary
+### Summary
 
-* Use `instanceof` when working with **class-based types**.
-* It helps determine the **actual class** of an object from a union of base types.
-* Combine `instanceof` with **custom type guards** (`animal is Dog`) for clean and type-safe code.
+- Use `instanceof` when working with **class-based types**.
+- It helps determine the **actual class** of an object from a union of base types.
+- Combine `instanceof` with **custom type guards** (`animal is Dog`) for clean and type-safe code.
 
 ---
 
-###  Practice Task
+### Practice Task
 
 Create a `Bird` class extending `Animal`, and modify your type guard logic to handle it.
 
@@ -715,29 +682,121 @@ With `instanceof`, you're now better equipped to safely and elegantly handle cla
 
 ---
 
+## Access Modifiers in TypeScript
 
+Access modifiers are used in TypeScript to control the **visibility** of class members (properties and methods). This helps achieve **encapsulation**, a fundamental principle of Object-Oriented Programming (OOP).
 
+---
 
+### Available Access Modifiers
 
+| Modifier    | Accessibility                                  |
+| ----------- | ---------------------------------------------- |
+| `public`    | Accessible from anywhere (default)             |
+| `private`   | Accessible **only inside the class**           |
+| `protected` | Accessible **inside the class and subclasses** |
+| `readonly`  | Can be read publicly but **not reassigned**    |
 
+---
 
+### Example: Bank Account
 
+```ts
+class BangAccount {
+  public readonly id: number; //  public and readonly
+  public name: string; //  public
+  private _balance: number; //  private - cannot access from outside
+  protected nid: number; //  protected - subclasses can access
 
+  constructor(id: number, name: string, _balance: number, nid: number) {
+    this.id = id;
+    this.name = name;
+    this._balance = _balance;
+    this.nid = nid;
 
+    console.log(` Account created for ${name} with ID: ${id}`);
+  }
 
+  public addDeposit(amount: number) {
+    this._balance += amount;
+    console.log(` ${amount} deposited. New balance: ${this._balance}`);
+  }
 
+  public getBalance() {
+    console.log(` Balance for ${this.name}: ${this._balance}`);
+    return this._balance;
+  }
+}
+```
 
+---
 
+### Creating an Account
 
+```ts
+const person = new BangAccount(11, "Mazumder", 200, 123456789);
 
+// Accessing public properties
+console.log(person.name); //  OK
+console.log(person.id); //  OK
 
+// Accessing private/protected properties ( Errors)
+// console.log(person._balance); //  Property '_balance' is private
+// console.log(person.nid);      //  Property 'nid' is protected
 
+// Updating balance through public method
+person.addDeposit(500); //  500 deposited
+person.getBalance(); //  Balance for Mazumder: 700
+```
 
+---
 
+### Inheritance & `protected`
 
+```ts
+class StudentAccount extends BangAccount {
+  showNID() {
+    console.log(` Accessing protected NID: ${this.nid}`);
+  }
 
+  //  Can't access private _balance here
+  // console.log(this._balance); // Error
+}
+```
 
+```ts
+const student = new StudentAccount(22, "Student Mia", 300, 9876543210);
+student.showNID(); //  Access to protected member in subclass
+```
 
+---
+
+### `readonly` in Action
+
+```ts
+const account = new BangAccount(101, "Readonly Test", 1000, 123123123);
+
+// Reading is OK
+console.log(account.id); //  OK
+
+// Writing is not allowed
+// account.id = 200; //  Error: Cannot assign to 'id' because it is a read-only property
+```
+
+---
+
+### Summary
+
+- Use `public` for properties/methods that should be open to the outside world.
+- Use `private` to **hide internal details** and avoid unwanted access.
+- Use `protected` when subclasses need internal access.
+- Use `readonly` to make a value constant after initialization.
+
+---
+
+These modifiers help enforce **clean architecture** and ensure **data integrity** in your TypeScript applications.
+
+---
 
 ## Author
 
