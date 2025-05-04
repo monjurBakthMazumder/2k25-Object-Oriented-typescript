@@ -45,7 +45,7 @@ ts-node-dev --respawn --transpile-only src/index.ts
 ## Folder Structure
 
 ```
-2k25-Explore-basic-types-of-typescript/
+2k25-2k25-Object-Oriented-typescript/
 ├── src/             # All TypeScript source files
 │   ├── index.ts     # Entry point
 │   └── examples/    # Example scripts (types, functions, etc.)
