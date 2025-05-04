@@ -520,6 +520,225 @@ This section helps build your foundational understanding of **runtime type check
 
 ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##  Type Guards in TypeScript – `instanceof`
+
+When working with **class-based object types**, TypeScript allows us to use the `instanceof` operator to narrow down types at runtime. This is especially useful in **object-oriented programming**, where instances might come from a class hierarchy.
+
+---
+
+###  What is `instanceof`?
+
+The `instanceof` operator checks whether an object is an **instance of a specific class** (or one of its subclasses).
+It is used to apply logic based on the **actual class** of the object at runtime.
+
+---
+
+### Example: Detecting Class Instances
+
+Let’s define a base class `Animal` and two subclasses: `Dog` and `Cat`.
+
+```ts
+class Animal {
+  name: string;
+  species: string;
+
+  constructor(name: string, species: string) {
+    this.name = name;
+    this.species = species;
+  }
+
+  makeSound() {
+    console.log(`${this.name} is making a generic animal sound`);
+  }
+}
+
+class Dog extends Animal {
+  makeBark() {
+    console.log(`${this.name} is barking: "Woof! Woof!"`);
+  }
+}
+
+class Cat extends Animal {
+  makeMeaw() {
+    console.log(`${this.name} is meowing: "Meow~"`);
+  }
+}
+```
+
+---
+
+###  Creating Objects
+
+```ts
+const dog = new Dog("Dog Vai", "Dog");
+const cat = new Cat("Cat Vai", "Cat");
+const rabbit = new Animal("Rabbit Vai", "Rabbit");
+```
+
+---
+
+###  Using `instanceof` Directly
+
+```ts
+const getAnimal1 = (animal: Animal) => {
+  if (animal instanceof Dog) {
+    console.log(" It's a Dog!");
+    animal.makeBark();
+  } else if (animal instanceof Cat) {
+    console.log(" It's a Cat!");
+    animal.makeMeaw();
+  } else {
+    console.log(" Unknown Animal Type");
+    animal.makeSound();
+  }
+};
+
+getAnimal1(dog);    // Dog Vai is barking: "Woof! Woof!"
+getAnimal1(cat);    // Cat Vai is meowing: "Meow~"
+getAnimal1(rabbit); // Rabbit Vai is making a generic animal sound
+```
+
+---
+
+###  Cleaner: Type Guard Functions (Predicates)
+
+To improve readability and reusability, you can define **custom type guard functions**.
+
+```ts
+const isDog = (animal: Animal): animal is Dog => {
+  return animal instanceof Dog;
+};
+
+const isCat = (animal: Animal): animal is Cat => {
+  return animal instanceof Cat;
+};
+```
+
+Now use them in logic:
+
+```ts
+const getAnimal2 = (animal: Animal) => {
+  if (isDog(animal)) {
+    console.log(" Detected a Dog using predicate.");
+    animal.makeBark();
+  } else if (isCat(animal)) {
+    console.log(" Detected a Cat using predicate.");
+    animal.makeMeaw();
+  } else {
+    console.log(" Detected unknown animal. Using fallback.");
+    animal.makeSound();
+  }
+};
+
+getAnimal2(dog);
+getAnimal2(cat);
+getAnimal2(rabbit);
+```
+
+---
+
+### Benefits of `instanceof`
+
+| Advantage                    | Description                                  |
+| ---------------------------- | -------------------------------------------- |
+| Runtime type detection       | Safe checks for real class type at runtime   |
+| OOP-friendly                 | Works naturally with class inheritance       |
+| Cleaner code with predicates | Improves separation of logic and reusability |
+
+---
+
+###  Summary
+
+* Use `instanceof` when working with **class-based types**.
+* It helps determine the **actual class** of an object from a union of base types.
+* Combine `instanceof` with **custom type guards** (`animal is Dog`) for clean and type-safe code.
+
+---
+
+###  Practice Task
+
+Create a `Bird` class extending `Animal`, and modify your type guard logic to handle it.
+
+<details>
+<summary> Sample Bird Class</summary>
+
+```ts
+class Bird extends Animal {
+  fly() {
+    console.log(`${this.name} is flying high!`);
+  }
+}
+
+const bird = new Bird("Bird Vai", "Bird");
+```
+
+Now add an `isBird` predicate and update `getAnimal2()`!
+
+</details>
+
+---
+
+With `instanceof`, you're now better equipped to safely and elegantly handle class-based logic in TypeScript.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
