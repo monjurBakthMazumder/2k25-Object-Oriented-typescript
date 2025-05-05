@@ -1044,6 +1044,126 @@ Static members are a powerful feature in object-oriented programming in TypeScri
 
 ---
 
+## Polymorphism in TypeScript
+
+Polymorphism is a powerful concept in Object-Oriented Programming (OOP) that allows objects of different types to be treated as instances of the same base type. In TypeScript, this is commonly achieved through class inheritance and method overriding.
+
+### Why Use Polymorphism?
+
+- Promotes **code reusability** and **flexibility**.
+- Allows **dynamic behavior** at runtime.
+- Makes code **easier to maintain** and **extend**.
+
+---
+
+### Example 1: People with Different Sleep Patterns
+
+In this example, we define a base class `Person` with a method `getSleep()`. We then extend it in `Student` and `Developer` classes, each overriding the method with their own logic.
+
+```ts
+class Person {
+  getSleep() {
+    console.log(`I am a person. I sleep for 8 hours.`);
+  }
+}
+
+class Student extends Person {
+  getSleep() {
+    console.log(`I am a student. I sleep for 7 hours.`);
+  }
+}
+
+class Developer extends Person {
+  getSleep() {
+    console.log(`I am a developer. I sleep for 6 hours.`);
+  }
+}
+
+// Function that demonstrates polymorphism
+const getSleepingHours = (person: Person) => {
+  person.getSleep(); // Calls appropriate method depending on the object type
+};
+
+const person1 = new Person();
+const person2 = new Student();
+const person3 = new Developer();
+
+getSleepingHours(person1); // I am a person. I sleep for 8 hours.
+getSleepingHours(person2); // I am a student. I sleep for 7 hours.
+getSleepingHours(person3); // I am a developer. I sleep for 6 hours.
+```
+
+---
+
+### Example 2: Shape Area Calculation
+
+Here we define a base class `Shape` with a method `getArea()`. This method is overridden in `Circle` and `Rectangle` subclasses to return the area based on their respective shapes.
+
+```ts
+class Shape {
+  getArea(): number {
+    return 0; // Default area
+  }
+}
+
+class Circle extends Shape {
+  radius: number;
+  constructor(radius: number) {
+    super();
+    this.radius = radius;
+  }
+
+  getArea(): number {
+    const area = Math.PI * this.radius * this.radius;
+    console.log(`Circle area: ${area}`);
+    return area;
+  }
+}
+
+class Rectangle extends Shape {
+  height: number;
+  width: number;
+
+  constructor(height: number, width: number) {
+    super();
+    this.height = height;
+    this.width = width;
+  }
+
+  getArea(): number {
+    const area = this.height * this.width;
+    console.log(`Rectangle area: ${area}`);
+    return area;
+  }
+}
+
+const shape1 = new Shape(); // Will return 0
+const shape2 = new Circle(10); // Will return area of circle
+const shape3 = new Rectangle(10, 20); // Will return area of rectangle
+
+const getShapeArea = (shape: Shape) => {
+  shape.getArea(); // Dynamically resolves based on the instance
+};
+
+getShapeArea(shape1); // Circle area: 0
+getShapeArea(shape2); // Circle area: 314.159...
+getShapeArea(shape3); // Rectangle area: 200
+```
+
+---
+
+### Summary
+
+| Feature                  | Description                                                                              |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| **Method Overriding**    | Allows subclasses to redefine methods of the parent class.                               |
+| **Polymorphic Function** | Functions like `getSleepingHours()` or `getShapeArea()` demonstrate runtime flexibility. |
+| **Code Scalability**     | Easily extendable for new subclasses without modifying existing logic.                   |
+
+Polymorphism is essential for writing flexible and scalable applications. Once you grasp how to apply it in different contexts (like people, shapes, behaviors), you’ll find your code becoming more modular and clean.
+
+---
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
