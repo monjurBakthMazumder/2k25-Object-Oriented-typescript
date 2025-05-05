@@ -1164,6 +1164,122 @@ Polymorphism is essential for writing flexible and scalable applications. Once y
 
 ---
 
+## Abstraction in Object-Oriented TypeScript
+
+Abstraction is one of the core pillars of Object-Oriented Programming (OOP). It allows us to **hide the complex implementation details** and expose only the **necessary parts of an object**. TypeScript supports abstraction through two main constructs:
+
+- **Interfaces**
+- **Abstract Classes**
+
+Both of these allow developers to define a contract or blueprint for classes, ensuring consistency while promoting flexibility and maintainability.
+
+---
+
+### Example 1: Abstraction Using Interface
+
+In this example, we define an interface `Vehicle1` that specifies the structure of any class that implements it.
+
+```ts
+interface Vehicle1 {
+  startEngine(): void;
+  stopEngine(): void;
+  move(): void;
+}
+
+class Car1 implements Vehicle1 {
+  startEngine(): void {
+    console.log(`[Interface] Starting the engine...`);
+  }
+
+  stopEngine(): void {
+    console.log(`[Interface] Stopping the engine...`);
+  }
+
+  move(): void {
+    console.log(`[Interface] Car is moving...`);
+  }
+
+  // Additional method beyond interface
+  test() {
+    console.log(`[Interface] Running a test on the car...`);
+  }
+}
+
+const toyotaCar = new Car1();
+toyotaCar.startEngine(); //  Starting the engine
+toyotaCar.move(); //  Car is moving
+toyotaCar.stopEngine(); //  Stopping the engine
+toyotaCar.test(); //  Running a test
+```
+
+> **Interfaces define the “what” but not the “how.”** Classes that implement the interface must provide actual implementations for the methods.
+
+---
+
+### Example 2: Abstraction Using Abstract Class
+
+An abstract class lets you define both **abstract methods** (which must be implemented in subclasses) and **concrete methods** (which are already implemented).
+
+```ts
+abstract class Car2 {
+  abstract startEngine(): void;
+  abstract stopEngine(): void;
+  abstract move(): void;
+
+  // Concrete method
+  test() {
+    console.log(`[Abstract]  Performing diagnostic test...`);
+  }
+}
+
+class ToyotaCar extends Car2 {
+  startEngine(): void {
+    console.log(`[Abstract]  Starting the Toyota engine...`);
+  }
+
+  stopEngine(): void {
+    console.log(`[Abstract]  Stopping the Toyota engine...`);
+  }
+
+  move(): void {
+    console.log(`[Abstract]  Toyota car is moving...`);
+  }
+}
+
+const corolla = new ToyotaCar();
+corolla.startEngine(); //  Starting the Toyota engine
+corolla.move(); //  Toyota car is moving
+corolla.stopEngine(); //  Stopping the Toyota engine
+corolla.test(); //  Performing diagnostic test
+```
+
+> **Abstract classes can offer shared functionality** while forcing subclasses to implement specific behaviors.
+
+---
+
+### Key Differences: Interface vs Abstract Class
+
+| Feature                   | Interface                  | Abstract Class                 |
+| ------------------------- | -------------------------- | ------------------------------ |
+| Can have implementations? | ❌ No                      | ✅ Yes                         |
+| Multiple inheritance      | ✅ Yes                     | ❌ No                          |
+| Flexibility               | More flexible              | More structured                |
+| Usage purpose             | Define capability/contract | Provide partial implementation |
+
+---
+
+### Use Abstraction When:
+
+- You want to enforce a **consistent structure** across different classes.
+- You want to **separate concerns** — consumers should not care about implementation.
+- You want to **minimize code duplication** via base class logic.
+
+---
+
+Abstraction allows developers to build more scalable and maintainable applications by hiding implementation complexity and focusing only on what really matters — **behavior and structure**.
+
+---
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
