@@ -1280,6 +1280,117 @@ Abstraction allows developers to build more scalable and maintainable applicatio
 
 ---
 
+## Encapsulation in TypeScript (OOP)
+
+Encapsulation is one of the fundamental principles of Object-Oriented Programming (OOP). It is the process of bundling data (properties) and methods (functions) that operate on the data into a single unit (class), and **restricting direct access** to some of the object's components. This helps in protecting the internal state of an object from unintended or harmful changes.
+
+---
+
+### Example: `BangAccount` class
+
+```ts
+class BangAccount {
+  public readonly id: number; // Read-only: set once during construction
+  public name: string; // Public: can be accessed and modified freely
+
+  private _balance: number; // Private: can only be accessed from within this class
+
+  protected nid: number; // Protected: accessible from this class and subclasses
+
+  constructor(id: number, name: string, _balance: number, nid: number) {
+    this.id = id;
+    this.name = name;
+    this._balance = _balance;
+    this.nid = nid;
+
+    console.log(
+      ` Account created for ${name} with ID: ${id} and initial balance: ${_balance}`
+    );
+  }
+
+  //  Public method: safely modifies private _balance
+  public addDeposit(amount: number) {
+    this._balance += amount;
+    console.log(` ${amount} deposited. New balance: ${this._balance}`);
+  }
+
+  // Private method: cannot be accessed outside the class
+  private getBalance() {
+    console.log(` Balance for ${this.name} is: ${this._balance}`);
+    return this._balance;
+  }
+
+  //  Public method returns the private method reference
+  public getHiddenMethod() {
+    console.log("Accessing hidden method...");
+    return this.getBalance;
+  }
+}
+```
+
+---
+
+### Subclass Example: StudentAccount
+
+```ts
+class StudentAccount extends BangAccount {
+  testAccess() {
+    //  Accessing protected property from subclass
+    console.log(` Accessing NID from subclass: ${this.nid}`);
+  }
+}
+```
+
+---
+
+### Usage Example
+
+```ts
+const person = new BangAccount(11, "Mazumder", 200, 4234234234234);
+
+console.log(` Account Holder: ${person.name}`); //  Accessible
+console.log(` Account ID: ${person.id}`); //  Accessible
+
+person.addDeposit(500); //  Uses public method to deposit money
+
+//  Directly accessing private method will result in an error
+// person.getBalance();  //  Not allowed
+
+//  Access private method via public method
+const hiddenBalanceFn = person.getHiddenMethod();
+hiddenBalanceFn.call(person); // Output:  Balance for Mazumder is: 700
+
+// 🎓 Create student account
+const student = new StudentAccount(22, "Student Mia", 300, 9876543210);
+student.testAccess(); // Output:  Accessing NID from subclass: 9876543210
+```
+
+---
+
+### Benefits of Encapsulation
+
+| Benefit             | Explanation                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| **Security**        | Private/protected properties can't be modified from outside. |
+| **Control**         | Changes to internal state go through controlled methods.     |
+| **Abstraction**     | Hide unnecessary details from outside the class.             |
+| **Maintainability** | Makes it easier to update and debug.                         |
+
+---
+
+### Recap
+
+- `private` ⇒ only accessible within the same class
+- `protected` ⇒ accessible within the class and its subclasses
+- `public` ⇒ accessible from anywhere
+- `readonly` ⇒ can be set once during construction, then becomes immutable
+
+---
+
+Encapsulation is a great way to **enforce consistency and integrity** in your classes. You can expose only the parts of your object that are safe to be interacted with, while hiding sensitive implementation details.
+
+---
+
 ## Author
 
 **Md Monjur Bakth Mazumder**  
